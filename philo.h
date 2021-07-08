@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 16:14:30 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/06 20:48:22 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/08 20:29:15 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+#include <string.h>
+
+
 
 typedef struct s_settings
 {
@@ -27,6 +30,7 @@ typedef struct s_settings
 	int num_must_eat;
 	struct s_fork *fork;
 	int time_start;
+
 } t_settings;
 
 typedef struct s_fork
@@ -41,6 +45,7 @@ typedef struct s_philo
 	pthread_t thread;
 	int start_time_eat;
 	int sum_eat;
+	int time_life;
 } t_philo;
 
 int	ft_atoi(const char *s);
