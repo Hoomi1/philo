@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:38:17 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/06 18:13:46 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/09 19:34:26 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,12 @@ int	ft_atoi(const char *s)
 			res = 0;
 	}
 	return (res * sign);
+}
+
+int	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
