@@ -20,13 +20,14 @@ typedef struct s_settings
 	pthread_mutex_t xz;
 	size_t time_start;
 	int stop_all_thr;
+	int index_eat;
 
 } t_settings;
 
 typedef struct s_fork
 {
 	pthread_mutex_t mutex_t;
-	int index;
+	int status;
 } t_fork;
 
 typedef struct s_philo
@@ -38,13 +39,14 @@ typedef struct s_philo
 	size_t time_life;
 	int l_fork;
 	int r_fork;
+	int flag_eat;
 } t_philo;
 
 int	ft_atoi(const char *s);
 int	ft_isdigit(int c);
 int	parse_value(int argc, char **argv);
 size_t	get_time(void);
-int	init_value(int argc, char **argv, t_settings *g_settings);
+int	init_value(int argc, char **argv, t_settings *g_settings, t_philo *philo);
 //void *work_philo(void *buf);
 
 #endif
