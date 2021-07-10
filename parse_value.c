@@ -6,13 +6,13 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 19:16:09 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/09 19:33:42 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/09 20:00:56 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	pars_str(int argc, char **argv)
+static int	pars_str(char **argv)
 {
 	int	i;
 	int	j;
@@ -42,7 +42,7 @@ int	parse_value(int argc, char **argv)
 			printf("Many arguments\n");
 		return (-1);
 	}
-	if (pars_str(argc, argv) == -1)
+	if (pars_str(argv) == -1)
 	{
 		printf("Arguments are numbers only\n");
 		return (-1);
