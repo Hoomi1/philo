@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:04 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 00:01:21 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/11 01:57:47 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_settings	*g_settings;
 
-void check_eat(t_philo *philo)
+void	check_eat(t_philo *philo, t_settings *g_settings)
 {
 	philo->sum_eat++;
 	if (philo->sum_eat == g_settings->num_must_eat && philo->flag_eat != 1)
@@ -29,7 +29,7 @@ void check_eat(t_philo *philo)
 	}
 }
 
-void	eat_fork(t_philo *philo)
+void	eat_fork(t_philo *philo, t_settings *g_settings)
 {
 	pthread_mutex_lock(&g_settings->fork[philo->r_fork].mutex_t);
 	g_settings->fork[philo->r_fork].status = 1;
@@ -44,7 +44,7 @@ void	eat_fork(t_philo *philo)
 	philo->start_time_eat = get_time();
 	printf(" %zu %d is eating \n", \
 		get_time() - g_settings->time_start, philo->num_i + 1);
-	check_eat(philo);
+	check_eat(philo, g_settings);
 	usleep(g_settings->time_eat);
 	g_settings->fork[philo->l_fork].status = 0;
 	g_settings->fork[philo->r_fork].status = 0;
@@ -58,7 +58,7 @@ int	take_forks(t_philo *philo, t_settings *g_settings)
 	{
 		if (g_settings->fork[philo->r_fork].status == 0)
 		{
-			eat_fork(philo);
+			eat_fork(philo, g_settings);
 			break ;
 		}
 		else
@@ -100,6 +100,39 @@ void	*work_philo(void *buf)
 	return (NULL);
 }
 
+int	end_philo(t_philo *philo, t_settings *g_settings)
+{
+	int	i;
+
+	i = 0;
+	while (i < g_settings->num_philo)
+	{
+		if (get_time() - philo->start_time_eat > g_settings->time_die / 1000)
+		{
+			printf(" %zu ", get_time() - g_settings->time_start);
+			printf("%d died \n", philo->num_i + 1);
+			g_settings->stop_all_thr = 1;
+			pthread_mutex_lock(&g_settings->xz);
+			return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	seting_philo(int i, t_philo *philo, t_settings *g_settings)
+{
+	philo[i].num_i = i;
+	philo[i].l_fork = i;
+	philo[i].start_time_eat = g_settings->time_start;
+	philo[i].sum_eat = 0;
+	philo[i].flag_eat = 0;
+	if (i == 0)
+		philo[i].r_fork = g_settings->num_philo - 1;
+	else
+		philo[i].r_fork = (i - 1);
+}
+
 int	init_thread(t_settings *g_settings, t_philo *philo)
 {
 	int	i;
@@ -110,39 +143,27 @@ int	init_thread(t_settings *g_settings, t_philo *philo)
 		return (-1);
 	while (i < g_settings->num_philo)
 	{
-		philo[i].num_i = i;
-		philo[i].l_fork = i;
-		philo[i].start_time_eat = g_settings->time_start;
-		philo[i].sum_eat = 0;
-		philo[i].flag_eat = 0;
-		if (i == 0)
-		{
-			philo[i].r_fork = g_settings->num_philo - 1;
-		}
-		else
-			philo[i].r_fork = (i - 1);
+		seting_philo(i, philo, g_settings);
+		// philo[i].num_i = i;
+		// philo[i].l_fork = i;
+		// philo[i].start_time_eat = g_settings->time_start;
+		// philo[i].sum_eat = 0;
+		// philo[i].flag_eat = 0;
+		// if (i == 0)
+		// 	philo[i].r_fork = g_settings->num_philo - 1;
+		// else
+		// 	philo[i].r_fork = (i - 1);
 		if (pthread_create(&philo[i].thread, NULL, work_philo, &philo[i]) != 0)
 			return (-1);
 		usleep(50);
 		i++;
 	}
-	i = 0;
 	while (g_settings->stop_all_thr != 1)
 	{
-		usleep(2000);
-		while (i < g_settings->num_philo)
-		{
-			if (get_time() - philo->start_time_eat > g_settings->time_die / 1000)
-			{
-				printf(" %zu ", get_time() - g_settings->time_start);
-				printf("%d died \n", philo->num_i + 1);
-				g_settings->stop_all_thr = 1;
-				pthread_mutex_lock(&g_settings->xz);
-				break ;
-			}
-			i++;
-		}
-		i = 0;
+		usleep(1000);
+		i = end_philo(philo, g_settings);
+		if (i == -1)
+			break;
 	}
 	return (0);
 }
