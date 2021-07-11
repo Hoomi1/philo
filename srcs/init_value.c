@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 19:20:07 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 00:05:57 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/11 02:16:03 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	init_value(int argc, char **argv, t_settings *settings, t_philo *philo)
 		return (-1);
 	while (i < settings->num_philo)
 	{
-		pthread_mutex_init(&settings->fork[i].mutex_t, NULL);
+		if (pthread_mutex_init(&settings->fork[i].mutex_t, NULL) != 0)
+			return (-1);
 		settings->fork[i].status = 0;
 		i++;
 	}
