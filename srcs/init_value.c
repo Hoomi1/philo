@@ -6,13 +6,13 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 19:20:07 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 02:16:03 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/11 03:36:14 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_value(int argc, char **argv, t_settings *settings, t_philo *philo)
+int	init_value(int argc, char **argv, t_settings *settings)
 {
 	int	i;
 

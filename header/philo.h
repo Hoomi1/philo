@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 03:02:14 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 03:02:16 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/11 03:36:32 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_isdigit(int c);
 int		parse_value(int argc, char **argv);
 size_t	get_time(void);
 int		init_value(int argc, char **argv \
-		, t_settings *g_settings, t_philo *philo);
+		, t_settings *g_settings);
 int		take_forks(t_philo *philo, t_settings *g_settings);
 void	sleeping(t_philo *philo, t_settings *g_settings);
 void	thinking(t_philo *philo, t_settings *g_settings);

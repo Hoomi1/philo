@@ -6,18 +6,18 @@
 #    By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/11 03:02:00 by cyuuki            #+#    #+#              #
-#    Updated: 2021/07/11 03:22:42 by cyuuki           ###   ########.fr        #
+#    Updated: 2021/07/11 03:39:48 by cyuuki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 DIR			=	./srcs
-HEADER		=	./includes
+HEADER		=	./header
 FILES		=	philo.c init_value.c parse_value.c utils.c work.c
 HEADER_F	=	philo.h
 
 SRCS		=	$(addprefix $(DIR)/, $(FILES))
-HEADER_COMP	=	$(addprefix $(HEADER/, $(HEADER_F)))
+HEADER_COMP	=	$(addprefix $(HEADER)/, $(HEADER_F))
 INCLUDES	=	-I$(HEADER)
 OBJS		=	$(SRCS:.c=.o)
 CC			=	gcc
@@ -34,10 +34,9 @@ $(NAME): $(OBJS)
 clean:
 	@rm -f $(OBJS)
 
-fclean:
+fclean: clean
 	@rm -f $(NAME)
 
-re:
-	fclean all
+re: fclean all
 
-.PHONY all fclean re clean
+.PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:04 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 02:50:33 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/11 03:36:19 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ int	main(int argc, char **argv)
 {
 	t_philo	*philo;
 
+	philo = NULL;
 	g_settings = (t_settings *) malloc(sizeof(t_settings));
 	if (parse_value(argc, argv) == -1)
 		return (0);
-	if (init_value(argc, argv, g_settings, philo) == -1)
+	if (init_value(argc, argv, g_settings) == -1)
 		return (0);
 	g_settings->time_start = get_time();
 	if (g_settings->num_philo > 0)
