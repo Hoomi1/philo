@@ -6,11 +6,19 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 19:20:07 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 03:36:14 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/12 19:54:49 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	init_must_eat(int argc, char **argv, t_settings *settings)
+{
+	if (argc != 6)
+		settings->num_must_eat = -1;
+	else if (argc == 6)
+		settings->num_must_eat = ft_atoi(argv[5]);
+}
 
 int	init_value(int argc, char **argv, t_settings *settings)
 {
@@ -36,5 +44,7 @@ int	init_value(int argc, char **argv, t_settings *settings)
 		settings->fork[i].status = 0;
 		i++;
 	}
+	if (pthread_mutex_init(&settings->xz, NULL) != 0)
+		return (-1);
 	return (0);
 }

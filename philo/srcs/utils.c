@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:38:17 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/11 03:46:56 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/12 19:39:24 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ size_t	get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int	destroy_mutex(t_philo *philo, t_settings *g_settings)
+static int	my_destroy_mutex(t_settings *g_settings)
 {
 	int	i;
 
 	i = 0;
 	if (g_settings)
 	{
+		printf("HELLO 2");
 		while (i < g_settings->num_philo)
 		{
 			if (pthread_mutex_destroy(&g_settings->fork[i].mutex_t) != 0)
@@ -85,6 +86,7 @@ int	destoy_human(t_philo *philo, t_settings *g_settings)
 	i = 0;
 	if (philo)
 	{
+		printf("HELLO 1");
 		while (i < g_settings->num_philo)
 		{
 			if (pthread_detach(philo[i].thread) != 0)
@@ -93,20 +95,6 @@ int	destoy_human(t_philo *philo, t_settings *g_settings)
 		}
 		free(philo);
 	}
-	destroy_mutex(philo, g_settings);
-	//i = 0;
-	// if (g_settings)
-	// {
-	// 	while (i < g_settings->num_philo)
-	// 	{
-	// 		if (pthread_mutex_destroy(&g_settings->fork[i].mutex_t) != 0)
-	// 			return (-1);
-	// 		i ++;
-	// 	}
-	// 	free(g_settings->fork);
-	// 	if (pthread_mutex_destroy(&g_settings->xz) != 0)
-	// 		return (-1);
-	// 	free(g_settings);
-	// }
+	my_destroy_mutex(g_settings);
 	return (0);
 }
