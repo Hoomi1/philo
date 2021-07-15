@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:04 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/12 19:57:50 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/15 16:08:47 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static int	end_philo(t_philo *philo)
 	{
 		if (get_time() - philo->start_time_eat > g_settings->time_die / 1000)
 		{
-			printf(" %zu ", get_time() - g_settings->time_start);
-			printf("%d died \n", philo->num_i + 1);
+			write_philo(5, g_settings, philo);
 			g_settings->stop_all_thr = 1;
 			pthread_mutex_lock(&g_settings->xz);
 			return (-1);
@@ -87,7 +86,8 @@ static int	init_thread(void)
 		if (i == -1)
 			break ;
 	}
-	destoy_human(philo, g_settings);
+	if (destoy_human(philo, g_settings) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -100,7 +100,11 @@ int	main(int argc, char **argv)
 		return (0);
 	g_settings->stop_all_thr = 0;
 	g_settings->time_start = get_time();
-	if (g_settings->num_philo > 0)
+	if (g_settings->num_philo > 0 && g_settings->time_die > 0 && \
+		g_settings->time_eat > 0 && g_settings->time_sleep > 0 \
+			&& g_settings->time_sleep > 0)
 		init_thread();
+	else
+		my_destroy_mutex(g_settings);
 	return (0);
 }

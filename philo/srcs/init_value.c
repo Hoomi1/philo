@@ -6,19 +6,11 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 19:20:07 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/12 19:54:49 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/15 15:26:24 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	init_must_eat(int argc, char **argv, t_settings *settings)
-{
-	if (argc != 6)
-		settings->num_must_eat = -1;
-	else if (argc == 6)
-		settings->num_must_eat = ft_atoi(argv[5]);
-}
 
 int	init_value(int argc, char **argv, t_settings *settings)
 {
@@ -47,4 +39,27 @@ int	init_value(int argc, char **argv, t_settings *settings)
 	if (pthread_mutex_init(&settings->xz, NULL) != 0)
 		return (-1);
 	return (0);
+}
+
+void	write_philo(int index, t_settings *settings, t_philo *philo)
+{
+	pthread_mutex_lock(&settings->xz);
+	if (index == 1)
+		printf(" %zu %d has taken a fork\n", \
+			get_time() - settings->time_start, philo->num_i + 1);
+	else if (index == 2)
+		printf(" %zu %d is eating \n", \
+			get_time() - settings->time_start, philo->num_i + 1);
+	else if (index == 3)
+		printf(" %zu %d is sleeping \n", \
+			get_time() - settings->time_start, philo->num_i + 1);
+	else if (index == 4)
+		printf(" %zu %d is is thinking \n", \
+			get_time() - settings->time_start, philo->num_i + 1);
+	else if (index == 5)
+	{
+		printf(" %zu ", get_time() - settings->time_start);
+		printf("%d died \n", philo->num_i + 1);
+	}
+	pthread_mutex_unlock(&settings->xz);
 }

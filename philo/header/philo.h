@@ -6,7 +6,7 @@
 /*   By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 03:02:14 by cyuuki            #+#    #+#             */
-/*   Updated: 2021/07/12 20:43:01 by cyuuki           ###   ########.fr       */
+/*   Updated: 2021/07/15 15:55:10 by cyuuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ int		take_forks(t_philo *philo, t_settings *g_settings);
 void	sleeping(t_philo *philo, t_settings *g_settings);
 void	thinking(t_philo *philo, t_settings *g_settings);
 int		destoy_human(t_philo *philo, t_settings *g_settings);
+void	write_philo(int index, t_settings *settings, t_philo *philo);
+int		my_destroy_mutex(t_settings *g_settings);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: cyuuki <cyuuki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/11 03:02:00 by cyuuki            #+#    #+#              #
-#    Updated: 2021/07/12 20:43:48 by cyuuki           ###   ########.fr        #
+#    Updated: 2021/07/15 14:51:55 by cyuuki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEADER_COMP	=	$(addprefix $(HEADER)/, $(HEADER_F))
 INCLUDES	=	-I$(HEADER)
 OBJS		=	$(SRCS:.c=.o)
 CC			=	gcc
-FLAGS		=	$(INCLUDES)
+FLAGS		=	-g $(INCLUDES)
 
 all: $(NAME)
 
